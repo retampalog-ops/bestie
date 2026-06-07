@@ -5,55 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Ek Number Ki Pagal Bestie 💖</title>
     <style>
+        /* --- BEAUTIFUL ANIMATED BACKGROUND --- */
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            /* Animated gradient background */
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #ffdde1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
             margin: 0;
             overflow: hidden;
             text-align: center;
-            position: relative; /* Added to keep everything contained */
+            position: relative;
         }
 
-        /* --- NEW: Cute Floating Background Effects --- */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- CUTE FLOATING BACKGROUND ICONS --- */
         .floating-bg {
             position: absolute;
             bottom: -10vh;
-            opacity: 0.5;
+            opacity: 0.6;
             animation: floatUpBg linear infinite;
-            z-index: 0; /* Keeps it behind the main card */
-            pointer-events: none; /* Ensures she can't accidentally click them */
+            z-index: 0;
+            pointer-events: none;
         }
 
         @keyframes floatUpBg {
             0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
             100% { transform: translateY(-120vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
 
-        /* --- MAIN CONTAINER --- */
+        /* --- MAIN CARD CONTAINER --- */
         .container {
             background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             max-width: 90%;
             width: 420px;
-            z-index: 10; /* Ensures the card is in the front */
-            position: relative;
+            z-index: 10;
+            position: absolute; /* Changed for the swipe animation */
             animation: float 4s ease-in-out infinite;
         }
 
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
 
+        /* --- PAGE TURN / SWIPE ANIMATIONS --- */
+        .swipe-out {
+            animation: swipeOutAnim 0.8s forwards cubic-bezier(0.8, -0.2, 0.2, 1.2);
+        }
+        
+        .swipe-in {
+            animation: swipeInAnim 0.8s forwards cubic-bezier(0.8, -0.2, 0.2, 1.2);
+        }
+
+        @keyframes swipeOutAnim {
+            0% { transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateX(-150vw) rotate(-20deg) scale(0.8); opacity: 0; }
+        }
+
+        @keyframes swipeInAnim {
+            0% { transform: translateX(150vw) rotate(20deg) scale(0.8); opacity: 0; }
+            100% { transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
+        }
+
+        /* --- CONTENT STYLING --- */
         img {
             width: 220px;
             border-radius: 15px;
@@ -89,22 +119,34 @@
             background-color: #ff4757;
             color: white;
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            animation: pulseBtn 2s infinite; /* Adds a heartbeat effect to the yes button */
+        }
+
+        @keyframes pulseBtn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         #yesBtn:hover {
-            transform: scale(1.1);
             background-color: #ff6b81;
+            animation: none;
+            transform: scale(1.1);
         }
 
         #noBtn {
             background-color: #f1f2f6;
             color: #2f3542;
             border: 2px solid #ced6e0;
-            position: relative; 
+            position: absolute; /* Needs to be absolute to run away cleanly */
             z-index: 100;
         }
 
-        #loader, #finalScreen { display: none; }
+        /* Hide screens initially */
+        #loaderScreen, #finalScreen { 
+            display: none; 
+            opacity: 0; /* Prep for swipe-in */
+        }
 
         .heart-loader {
             font-size: 50px;
@@ -117,12 +159,13 @@
             100% { transform: scale(1.4); }
         }
 
+        /* --- CONFETTI --- */
         .confetti {
             position: absolute;
             width: 12px;
             height: 12px;
             animation: fall linear forwards;
-            z-index: 20; /* Confetti falls over everything! */
+            z-index: 20;
         }
 
         @keyframes fall {
@@ -133,100 +176,114 @@
 </head>
 <body>
 
-    <div class="container" id="mainContainer">
+    <div class="container" id="questionScreen">
+        <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" alt="Cute Bears Asking">
+        <h1 id="questionText">Chal sach sach bata... Am I the cutest, most amazing dramebaaz in your life? 🥺✨</h1>
         
-        <div id="questionScreen">
-            <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" alt="Cute Bears Asking">
-            <h1 id="questionText">Chal sach sach bata... Am I the cutest, most amazing dramebaaz in your life? 🥺✨</h1>
-            
-            <div class="btn-group">
-                <button id="yesBtn">Haan re baba! 💖</button>
-                <button id="noBtn">Nahi, you are annoying 😒</button>
-            </div>
-        </div>
-
-        <div id="loader">
-            <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" alt="Typing Bear">
-            <h1>Scanning teri thodi si akal... ⏳😂</h1>
-            <div class="heart-loader">💖</div>
-        </div>
-
-        <div id="finalScreen">
-            <img src="https://media.tenor.com/I2qA3lBvGf4AAAAi/peach-goma-love.gif" alt="Hugging Bears">
-            <h1>Yayyy! Tere paas koi aur option tha bhi nahi waise! 😂</h1>
-            <p style="font-size: 1.1rem; color: #57606f; line-height: 1.5; margin-top: 15px;">
-                You are officially stuck with me for life. Tu kitni bhi pagal ho, meri favorite bestie hai! <br><br>
-                <strong>Happy Best Friend Day, meri jaan! ♾️💕</strong>
-            </p>
+        <div class="btn-group">
+            <button id="yesBtn">Haan re baba! 💖</button>
+            <button id="noBtn">Nahi, tu annoying hai 😒</button>
         </div>
     </div>
 
+    <div class="container" id="loaderScreen">
+        <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" alt="Typing Bear">
+        <h1>Scanning teri thodi si akal... ⏳😂</h1>
+        <div class="heart-loader">💖</div>
+    </div>
+
+    <div class="container" id="finalScreen">
+        <img src="https://media.tenor.com/I2qA3lBvGf4AAAAi/peach-goma-love.gif" alt="Hugging Bears">
+        <h1>Yayyy! Tere paas koi aur option tha bhi nahi waise! 😂</h1>
+        <p style="font-size: 1.1rem; color: #57606f; line-height: 1.5; margin-top: 15px;">
+            Tu officially stuck hai mere saath forever. Tu kitni bhi pagal ho, meri favorite bestie hai! <br><br>
+            <strong>Happy Best Friend Day, meri jaan! ♾️💕</strong>
+        </p>
+    </div>
+
     <script>
-        // --- NEW: Generate Cute Background Elements Continuously ---
+        // --- 1. GENERATE BACKGROUND ICONS ---
         function createBackgroundEffect() {
-            const icons = ['💖', '✨', '🌸', '☁️', '🎀'];
+            const icons = ['💖', '✨', '🌸', '☁️', '🎀', '🦋'];
             const effect = document.createElement('div');
-            
-            // Pick a random emoji from the list
             effect.innerText = icons[Math.floor(Math.random() * icons.length)];
             effect.classList.add('floating-bg');
             
-            // Randomize horizontal start position, size, and float speed
             effect.style.left = Math.random() * 100 + 'vw';
-            effect.style.fontSize = Math.random() * 20 + 15 + 'px'; // Size between 15px and 35px
-            effect.style.animationDuration = Math.random() * 6 + 6 + 's'; // Takes 6 to 12 seconds to float up
+            effect.style.fontSize = Math.random() * 20 + 15 + 'px';
+            effect.style.animationDuration = Math.random() * 6 + 6 + 's'; 
             
             document.body.appendChild(effect);
-            
-            // Remove the element after it floats off screen to keep the page running smoothly
-            setTimeout(() => {
-                effect.remove();
-            }, 12000);
+            setTimeout(() => { effect.remove(); }, 12000);
         }
-
-        // Create a new floating background icon every 400 milliseconds!
         setInterval(createBackgroundEffect, 400);
 
-        // --- Original Button & Logic ---
+        // --- 2. THE RUNAWAY NO BUTTON ---
         const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
         const questionScreen = document.getElementById('questionScreen');
-        const loader = document.getElementById('loader');
-        const finalScreen = document.getElementById('finalScreen');
         
-        // The Runaway Trick
+        // Put the NO button exactly next to the YES button to start
+        noBtn.style.left = '55%'; 
+        noBtn.style.top = '78%';
+
         function runAway() {
-            const maxX = window.innerWidth - noBtn.offsetWidth - 30;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 30;
+            // Get screen boundaries so it doesn't jump off the edge
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
             
             const randomX = Math.max(20, Math.floor(Math.random() * maxX));
             const randomY = Math.max(20, Math.floor(Math.random() * maxY));
             
+            // Pop the button out of the card and onto the main screen
             noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
 
-        // Works on PC (Hover) and Phone (Touch)
         noBtn.addEventListener('mouseover', runAway);
         noBtn.addEventListener('touchstart', (e) => {
             e.preventDefault(); 
             runAway();
         });
 
-        // The "Yes" Button Logic
-        yesBtn.addEventListener('click', () => {
-            questionScreen.style.display = 'none';
-            loader.style.display = 'block';
+        // --- 3. THE PAGE TURN LOGIC ---
+        const yesBtn = document.getElementById('yesBtn');
+        const loaderScreen = document.getElementById('loaderScreen');
+        const finalScreen = document.getElementById('finalScreen');
+
+        // Function to smoothly swap screens
+        function transitionScreens(hideScreen, showScreen, delay) {
+            // Swipe out the current screen
+            hideScreen.classList.add('swipe-out');
             
             setTimeout(() => {
-                loader.style.display = 'none';
-                finalScreen.style.display = 'block';
-                startConfetti();
-            }, 3000); // 3 seconds of fake loading
+                hideScreen.style.display = 'none';
+                hideScreen.classList.remove('swipe-out');
+                
+                // Swipe in the new screen
+                showScreen.style.display = 'block';
+                showScreen.classList.add('swipe-in');
+            }, 800); // Wait for the swipe-out animation to finish
+        }
+
+        // When she clicks YES!
+        yesBtn.addEventListener('click', () => {
+            // Remove the NO button permanently so it doesn't float around
+            noBtn.remove();
+            
+            // Transition 1: Question -> Loader
+            transitionScreens(questionScreen, loaderScreen);
+            
+            // Transition 2: Loader -> Final Screen (after 3.5 seconds)
+            setTimeout(() => {
+                transitionScreens(loaderScreen, finalScreen);
+                
+                // Wait for the final screen to slide in, then start confetti
+                setTimeout(startConfetti, 800); 
+            }, 3500);
         });
 
-        // Magical Confetti Rain
+        // --- 4. CONFETTI RAIN ---
         function startConfetti() {
             const colors = ['#ff4757', '#ff7f50', '#2ed573', '#1e90ff', '#ff6348', '#ffa502'];
             for(let i = 0; i < 150; i++) {
@@ -236,9 +293,7 @@
                 conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 conf.style.animationDelay = (Math.random() * 1.5) + 's';
-                
                 if (Math.random() > 0.5) conf.style.borderRadius = '50%';
-                
                 document.body.appendChild(conf);
             }
         }
