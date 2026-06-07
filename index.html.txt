@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Best Friends Day!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffe4e1, #ffb6c1);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            z-index: 10;
+            border: 2px solid #ff69b4;
+        }
+
+        h1 {
+            color: #d11a5b;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #e0529c;
+            transform: scale(1.05);
+        }
+
+        #message-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #fff0f5;
+            border-left: 5px solid #ff69b4;
+            border-radius: 5px;
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Floating Hearts Layer */
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            opacity: 0.6;
+            font-size: 1.5rem;
+            animation: float Up 4s linear infinite;
+            bottom: -50px;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Happy Best Friends Day! 🌟</h1>
+        <p>To my absolute favorite person. Thank you for always listening, laughing at my terrible jokes, and being the best friend anyone could ever ask for!</p>
+        <button class="btn" onclick="revealMemory()">Click for a Message</button>
+        
+        <div id="message-box">
+            <strong>Dear Bestie,</strong>
+            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
+                No matter how much time passes or how busy life gets, you will always be my person. Cheers to more adventures, inside jokes, and memory-making! 🥂
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Function to reveal the hidden personal message
+        function revealMemory() {
+            const msgBox = document.getElementById('message-box');
+            msgBox.style.display = msgBox.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Function to generate background floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's'; // Between 3s and 5s
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px'; // Between 15px and 30px
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Generate a new heart every 400ms
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
