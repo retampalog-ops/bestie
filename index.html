@@ -3,144 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Best Friends Day!</title>
+    <title>Happy Bestie Day! 💖</title>
     <style>
+        /* CSS Styling */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body {
-            background: linear-gradient(135deg, #ffe4e1, #ffb6c1);
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffd6eb 100%);
+            color: #4a4a4a;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
             overflow-x: hidden;
-            position: relative;
         }
-
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        .container {
             text-align: center;
-            max-width: 450px;
-            width: 90%;
-            z-index: 10;
-            border: 2px solid #ff69b4;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(243, 134, 188, 0.3);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1.5s ease-in-out;
         }
-
         h1 {
-            color: #d11a5b;
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
-
         p {
-            color: #555;
             font-size: 1.1rem;
             line-height: 1.6;
-            margin-bottom: 1.5rem;
+            margin-bottom: 25px;
         }
-
+        .heart {
+            font-size: 4rem;
+            color: #e84393;
+            animation: heartbeat 1.2s infinite;
+            margin: 20px 0;
+            display: inline-block;
+        }
         .btn {
-            background-color: #ff69b4;
+            background-color: #e84393;
             color: white;
             border: none;
-            padding: 0.8rem 1.8rem;
-            font-size: 1rem;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
             border-radius: 25px;
             cursor: pointer;
+            box-shadow: 0 5px 15px rgba(232, 67, 147, 0.4);
             transition: transform 0.2s, background-color 0.2s;
-            font-weight: bold;
         }
-
         .btn:hover {
-            background-color: #e0529c;
+            background-color: #d63384;
             transform: scale(1.05);
         }
-
-        #message-box {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: #fff0f5;
-            border-left: 5px solid #ff69b4;
-            border-radius: 5px;
+        /* Hidden Message Box */
+        .secret-message {
             display: none;
-            text-align: left;
-            animation: fadeIn 0.5s ease-in-out;
+            margin-top: 25px;
+            padding: 20px;
+            background: #fff0f6;
+            border-left: 5px solid #e84393;
+            border-radius: 8px;
+            font-style: italic;
+            animation: slideDown 0.5s ease-out forwards;
         }
-
+        /* Keyframe Animations */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Floating Hearts Layer */
-        .heart {
-            position: absolute;
-            color: #ff69b4;
-            opacity: 0.6;
-            font-size: 1.5rem;
-            animation: float Up 4s linear infinite;
-            bottom: -50px;
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            20% { transform: scale(1.15); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.15); }
+            80% { transform: scale(1); }
+            100% { transform: scale(1); }
         }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-110vh) rotate(360deg);
-                opacity: 0;
-            }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Happy Best Friends Day! 🌟</h1>
-        <p>To my absolute favorite person. Thank you for always listening, laughing at my terrible jokes, and being the best friend anyone could ever ask for!</p>
-        <button class="btn" onclick="revealMemory()">Click for a Message</button>
+    <div class="container">
+        <h1>Happy Bestie Day! 👯‍♀️</h1>
+        <div class="heart">❤️</div>
+        <p>To the one who knows all my secrets, laughs at my terrible jokes, and stands by me no matter what. Thank you for being the ultimate best friend anyone could ever ask for!</p>
         
-        <div id="message-box">
-            <strong>Dear Bestie,</strong>
-            <p style="margin: 5px 0 0 0; font-size: 0.95rem;">
-                No matter how much time passes or how busy life gets, you will always be my person. Cheers to more adventures, inside jokes, and memory-making! 🥂
-            </p>
+        <button class="btn" onclick="revealMessage()">Click for a Surprise 💌</button>
+        
+        <!-- Editable Message Area -->
+        <div id="secretBox" class="secret-message">
+            "Side by side or miles apart, real best friends are always close to the heart. Thanks for being my person today and every single day! 💖"
         </div>
     </div>
 
     <script>
-        // Function to reveal the hidden personal message
-        function revealMemory() {
-            const msgBox = document.getElementById('message-box');
-            msgBox.style.display = msgBox.style.display === 'block' ? 'none' : 'block';
+        // JavaScript Interactive Logic
+        function revealMessage() {
+            const messageBox = document.getElementById('secretBox');
+            const button = document.querySelector('.btn');
+            
+            if (messageBox.style.display === 'none' || messageBox.style.display === '') {
+                messageBox.style.display = 'block';
+                button.textContent = 'Close Envelope 🔒';
+                createConfetti();
+            } else {
+                messageBox.style.display = 'none';
+                button.textContent = 'Click for a Surprise 💌';
+            }
         }
 
-        // Function to generate background floating hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's'; // Between 3s and 5s
-            heart.style.fontSize = Math.random() * 15 + 15 + 'px'; // Between 15px and 30px
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+        // Quick programmatically generated confetti effect
+        function createConfetti() {
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.innerText = '🌸';
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-5vh';
+                confetti.style.fontSize = Math.random() * 20 + 10 + 'px';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.pointerEvents = 'none';
+                confetti.style.transition = 'transform 2s linear, opacity 2s linear';
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.style.transform = `translateY(105vh) rotate(${Math.random() * 360}deg)`;
+                    confetti.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 2000);
+            }
         }
-
-        // Generate a new heart every 400ms
-        setInterval(createHeart, 400);
     </script>
 </body>
 </html>
