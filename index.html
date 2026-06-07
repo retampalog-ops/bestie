@@ -15,8 +15,27 @@
             margin: 0;
             overflow: hidden;
             text-align: center;
+            position: relative; /* Added to keep everything contained */
         }
 
+        /* --- NEW: Cute Floating Background Effects --- */
+        .floating-bg {
+            position: absolute;
+            bottom: -10vh;
+            opacity: 0.5;
+            animation: floatUpBg linear infinite;
+            z-index: 0; /* Keeps it behind the main card */
+            pointer-events: none; /* Ensures she can't accidentally click them */
+        }
+
+        @keyframes floatUpBg {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-120vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* --- MAIN CONTAINER --- */
         .container {
             background: rgba(255, 255, 255, 0.95);
             padding: 30px;
@@ -24,7 +43,8 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             max-width: 90%;
             width: 420px;
-            z-index: 10;
+            z-index: 10; /* Ensures the card is in the front */
+            position: relative;
             animation: float 4s ease-in-out infinite;
         }
 
@@ -102,7 +122,7 @@
             width: 12px;
             height: 12px;
             animation: fall linear forwards;
-            z-index: 1;
+            z-index: 20; /* Confetti falls over everything! */
         }
 
         @keyframes fall {
@@ -116,7 +136,7 @@
     <div class="container" id="mainContainer">
         
         <div id="questionScreen">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnBxcnlpMmxneTU2bGgzNGl0cXhvZng5amhyMzNxdWE5aTJlbzN2MiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gjHkRHSuHqu99y9Yjt/giphy.gif" alt="Cute Bears Asking">
+            <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" alt="Cute Bears Asking">
             <h1 id="questionText">Chal sach sach bata... Am I the cutest, most amazing dramebaaz in your life? 🥺✨</h1>
             
             <div class="btn-group">
@@ -126,22 +146,48 @@
         </div>
 
         <div id="loader">
-            <img src="https://tenor.com/bcRBP.gif" alt="Typing Bear">
+            <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" alt="Typing Bear">
             <h1>Scanning teri thodi si akal... ⏳😂</h1>
             <div class="heart-loader">💖</div>
         </div>
 
         <div id="finalScreen">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnBxcnlpMmxneTU2bGgzNGl0cXhvZng5amhyMzNxdWE5aTJlbzN2MiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/IzXiddo2twMmdmU8Lv/giphy.gif" alt="Hugging Bears">
-            <h1>Yayyy! Mujhe pehele se hi pata tha re! 😂</h1>
+            <img src="https://media.tenor.com/I2qA3lBvGf4AAAAi/peach-goma-love.gif" alt="Hugging Bears">
+            <h1>Yayyy! Tere paas koi aur option tha bhi nahi waise! 😂</h1>
             <p style="font-size: 1.1rem; color: #57606f; line-height: 1.5; margin-top: 15px;">
-                You are officially stuck with me for life. Tu kitni bhi pagal ho,pertu meri favorite bestie hai! <br><br>
+                You are officially stuck with me for life. Tu kitni bhi pagal ho, meri favorite bestie hai! <br><br>
                 <strong>Happy Best Friend Day, meri jaan! ♾️💕</strong>
             </p>
         </div>
     </div>
 
     <script>
+        // --- NEW: Generate Cute Background Elements Continuously ---
+        function createBackgroundEffect() {
+            const icons = ['💖', '✨', '🌸', '☁️', '🎀'];
+            const effect = document.createElement('div');
+            
+            // Pick a random emoji from the list
+            effect.innerText = icons[Math.floor(Math.random() * icons.length)];
+            effect.classList.add('floating-bg');
+            
+            // Randomize horizontal start position, size, and float speed
+            effect.style.left = Math.random() * 100 + 'vw';
+            effect.style.fontSize = Math.random() * 20 + 15 + 'px'; // Size between 15px and 35px
+            effect.style.animationDuration = Math.random() * 6 + 6 + 's'; // Takes 6 to 12 seconds to float up
+            
+            document.body.appendChild(effect);
+            
+            // Remove the element after it floats off screen to keep the page running smoothly
+            setTimeout(() => {
+                effect.remove();
+            }, 12000);
+        }
+
+        // Create a new floating background icon every 400 milliseconds!
+        setInterval(createBackgroundEffect, 400);
+
+        // --- Original Button & Logic ---
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const questionScreen = document.getElementById('questionScreen');
@@ -191,7 +237,6 @@
                 conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 conf.style.animationDelay = (Math.random() * 1.5) + 's';
                 
-                // Make some confetti circular
                 if (Math.random() > 0.5) conf.style.borderRadius = '50%';
                 
                 document.body.appendChild(conf);
