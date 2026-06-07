@@ -3,306 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Bestie ✨</title>
+    <title>Happy Best Friend Day! 💖</title>
     <style>
-        :root {
-            --accent: #ff5e7e;
-            --mint: #b5e2da;
-            --cream: #fdfbf7;
-            --dark: #2f3e46;
-        }
-
+        /* This is the CSS - It makes everything look pretty */
         body {
-            background-color: #f7e1d7;
-            background-image: radial-gradient(#f4acb7 1px, transparent 1px);
-            background-size: 24px 24px;
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--dark);
-            margin: 0;
-            padding: 20px;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Sparkle Animation */
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            background: white;
-            border-radius: 50%;
-            animation: flash 1s ease-in infinite alternate;
-            z-index: 10;
-        }
-
-        .scrapbook {
-            background: var(--cream);
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-            border-radius: 4px;
-            box-shadow: 12px 12px 0px var(--dark);
-            border: 3px solid var(--dark);
-            position: relative;
-        }
-
-        .header-tape {
-            position: absolute;
-            top: -15px;
-            left: 35%;
-            width: 150px;
-            height: 35px;
-            background-color: rgba(181, 226, 218, 0.7);
-            transform: rotate(-2deg);
-            border-left: 3px dashed rgba(0,0,0,0.1);
-            border-right: 3px dashed rgba(0,0,0,0.1);
-        }
-
-        .title {
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* Polaroid Slider System */
-        .polaroid-frame {
-            background: white;
-            padding: 15px 15px 40px 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            border: 2px solid var(--dark);
-            margin: 25px 0;
-            transform: rotate(1deg);
-            transition: transform 0.3s ease;
-        }
-
-        .polaroid-frame:hover {
-            transform: rotate(-1deg) scale(1.02);
-        }
-
-        .display-screen {
-            background: #e5e5e5;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            position: relative;
             overflow: hidden;
-            border: 2px solid var(--dark);
+            margin: 0;
         }
-
-        .memory-text {
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: var(--dark);
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transform: scale(0);
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            max-width: 80%;
         }
-
-        .controls {
-            margin-top: 15px;
+        @keyframes popIn {
+            to { transform: scale(1); }
         }
-
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 10px;
-            background: var(--mint);
-            border: 2px solid var(--dark);
-            outline: none;
-            border-radius: 5px;
+        h1 {
+            color: #ff6b6b;
+            margin-top: 0;
         }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 25px;
-            height: 25px;
-            background: var(--accent);
-            border: 2px solid var(--dark);
-            cursor: pointer;
-            border-radius: 50%;
-        }
-
-        /* Fake Music Player Widget */
-        .player-widget {
-            border: 2px solid var(--dark);
-            background: #fff;
-            padding: 10px;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-radius: 8px;
-        }
-
-        .play-btn {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 2px solid var(--dark);
-            background: var(--mint);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .track-info {
-            flex-grow: 1;
-            font-size: 0.8rem;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background: var(--dark);
-            width: 80%;
-            margin-top: 5px;
-            position: relative;
-            animation: loadBar 4s linear infinite;
-        }
-
-        /* Interactive Secret Letter Envelope */
-        .envelope-container {
-            margin-top: 25px;
-            text-align: center;
-        }
-
-        .open-letter-btn {
-            background: var(--accent);
+        button {
+            background: #ff6b6b;
             color: white;
-            border: 2px solid var(--dark);
-            padding: 10px 20px;
-            font-family: 'Courier New', Courier, monospace;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
             font-weight: bold;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 4px 4px 0px var(--dark);
-            transition: all 0.2s;
+            transition: 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
-
-        .open-letter-btn:active {
-            box-shadow: 0px 0px 0px var(--dark);
-            transform: translate(4px, 4px);
+        button:hover {
+            background: #ff4757;
+            transform: scale(1.1);
         }
-
-        .secret-letter {
+        .hidden-message {
             display: none;
-            background: #fffdf3;
-            border: 2px dashed var(--accent);
-            padding: 20px;
-            margin-top: 15px;
-            text-align: left;
-            font-size: 0.95rem;
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
             line-height: 1.5;
-            animation: slideDown 0.4s ease-out forwards;
         }
-
-        /* KEYFRAMES */
-        @keyframes flash {
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1.2); }
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: floatUp linear infinite;
+            z-index: -1;
         }
-
-        @keyframes loadBar {
-            0% { width: 10%; }
-            50% { width: 90%; }
-            100% { width: 10%; }
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="scrapbook">
-        <div class="header-tape"></div>
-        <div class="title">BFF Report Card 🏆</div>
+    <div class="card">
+        <h1>Happy Best Friend Day! ✨</h1>
+        <p>To the absolute best bestie in the world...</p>
         
-        <div class="polaroid-frame">
-            <div class="display-screen" id="cameraScreen">🤠</div>
-            <div class="memory-text" id="cameraCaption">Slide to develop memories...</div>
-        </div>
-
-        <div class="controls">
-            <input type="range" min="1" max="4" value="1" class="slider" id="memorySlider" oninput="updateMemory(this.value)">
-        </div>
-
-        <div class="player-widget">
-            <div class="play-btn" onclick="alert('Imagine our chaotic favorite song playing right now! 🎧')">▶</div>
-            <div class="track-info">
-                <strong>Our Theme Song.mp3</strong>
-                <div class="progress-bar"></div>
-            </div>
-            <span style="font-size: 0.8rem;">02:45</span>
-        </div>
-
-        <div class="envelope-container">
-            <button class="open-letter-btn" onclick="toggleLetter()">READ TRUE CONFESSION ✉️</button>
-            <div class="secret-letter" id="letterBox">
-                <strong>Dear Bestie,</strong><br><br>
-                If awards were handed out for dealing with my dramatic rants, carrying our shared brain cell, and choosing the perfect snacks, you'd win a platinum trophy.<br><br>
-                Thanks for making ordinary days feel legendary. You're stuck with me forever! Happy Best Friend's Day! 🥤⭐
-            </div>
+        <button id="magicButton" onclick="revealMessage()">Click to Unlock My Secret Message</button>
+        
+        <div id="msg" class="hidden-message">
+            <p><strong>Surprise! 🎉</strong></p>
+            <p>You are amazing, and I am so lucky to have you as my best friend. Thanks for all the laughs and memories!</p>
+            <p><em>(Yes, I actually coded this just for you! 👩‍💻😎)</em></p>
         </div>
     </div>
 
     <script>
-        // Data for the slide-to-develop machine
-        const memories = {
-            1: { emoji: '🤠', text: 'Category 1: Partner In Crime 👯' },
-            2: { emoji: '🍕', text: 'Category 2: Professional Food Destroyer 🍟' },
-            3: { emoji: '🧠', text: 'Category 3: Share The Same Brain Cell ⚡' },
-            4: { emoji: '👑', text: 'Category 4: Absolute Golden Legend 💖' }
-        };
-
-        function updateMemory(val) {
-            const screen = document.getElementById('cameraScreen');
-            const caption = document.getElementById('cameraCaption');
+        /* This is the JavaScript - It makes the interactive magic happen */
+        function revealMessage() {
+            // Show the hidden message
+            document.getElementById('msg').style.display = 'block';
+            // Hide the button after clicking
+            document.getElementById('magicButton').style.display = 'none';
             
-            // Add visual transition pop effect
-            screen.style.transform = 'scale(0.8)';
-            screen.style.opacity = '0.5';
-            
-            setTimeout(() => {
-                screen.innerText = memories[val].emoji;
-                caption.innerText = memories[val].text;
-                screen.style.transform = 'scale(1)';
-                screen.style.opacity = '1';
-            }, 150);
-        }
-
-        function toggleLetter() {
-            const letter = document.getElementById('letterBox');
-            if(letter.style.display === 'block') {
-                letter.style.display = 'none';
-            } else {
-                letter.style.display = 'block';
+            // Create a bunch of floating hearts!
+            for(let i = 0; i < 50; i++) {
+                setTimeout(createHeart, i * 50);
             }
         }
 
-        // Generate background twinkle sparkles dynamically
-        setInterval(() => {
-            const sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            sparkle.innerHTML = '✨';
-            sparkle.style.left = Math.random() * window.innerWidth + 'px';
-            sparkle.style.top = Math.random() * window.innerHeight + 'px';
-            sparkle.style.fontSize = Math.random() * 15 + 10 + 'px';
+        function createHeart() {
+            const heart = document.createElement('div');
+            const emojis = ['💖', '✨', '🌸', '🥺'];
+            heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.classList.add('heart');
             
-            document.body.appendChild(sparkle);
-            setTimeout(() => { sparkle.remove(); }, 1200);
-        }, 400);
+            // Randomize position and animation speed
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            
+            document.body.appendChild(heart);
+            
+            // Remove the heart after it floats away to keep the code running smoothly
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
     </script>
 </body>
 </html>
