@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Ek Number Ki Pagal Bestie 💖</title>
+    <title>For My Favorite Dramebaaz 💖</title>
     <style>
-        /* --- BEAUTIFUL ANIMATED BACKGROUND --- */
+        /* --- 1. ANIMATED PASTEL BACKGROUND --- */
         body {
             display: flex;
             justify-content: center;
@@ -17,7 +17,6 @@
             font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
             margin: 0;
             overflow: hidden;
-            text-align: center;
             position: relative;
         }
 
@@ -27,18 +26,23 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- BACKGROUND GIFS --- */
-        .bg-gif {
-            position: fixed;
-            z-index: -1;
-            opacity: 0.15; 
+        /* --- 2. FLOATING ICONS & CURSOR TRAIL --- */
+        .floating-bg {
+            position: absolute;
+            bottom: -10vh;
+            opacity: 0.5;
+            animation: floatUpBg linear infinite;
+            z-index: 0;
             pointer-events: none;
-            width: 300px;
         }
-        .bg-gif-1 { top: 5%; left: 5%; }
-        .bg-gif-2 { bottom: 5%; right: 5%; transform: scaleX(-1); }
 
-        /* --- MAGIC CURSOR TRAIL (Reduced) --- */
+        @keyframes floatUpBg {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
         .cursor-trail {
             position: absolute;
             pointer-events: none;
@@ -48,372 +52,256 @@
         }
 
         @keyframes fadeOutTrail {
-            0% { opacity: 1; transform: scale(1) translateY(0); }
+            0% { opacity: 1; transform: scale(1); }
             100% { opacity: 0; transform: scale(0.5) translateY(-20px); }
         }
 
-        /* --- MAIN CARD CONTAINER --- */
+        /* --- 3. MAIN CARD CONTAINERS & SWIPE --- */
         .container {
             background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 25px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             max-width: 90%;
-            width: 420px;
+            width: 400px;
             z-index: 10;
-            position: absolute; 
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* --- PAGE TURN / SWIPE ANIMATIONS --- */
-        .swipe-out {
-            animation: swipeOutAnim 0.8s forwards cubic-bezier(0.8, -0.2, 0.2, 1.2);
-        }
-        
-        .swipe-in {
-            animation: swipeInAnim 0.8s forwards cubic-bezier(0.8, -0.2, 0.2, 1.2);
-        }
-
-        @keyframes swipeOutAnim {
-            0% { transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
-            100% { transform: translateX(-150vw) rotate(-20deg) scale(0.8); opacity: 0; }
-        }
-
-        @keyframes swipeInAnim {
-            0% { transform: translateX(150vw) rotate(20deg) scale(0.8); opacity: 0; }
-            100% { transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
-        }
-
-        /* --- BOOK VIEW LAYOUT --- */
-        .book-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 20px;
-            text-align: left;
-            padding: 20px 10px;
-            min-height: 250px;
-        }
-
-        .page {
-            flex: 1;
-            background: #fffdf5;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 5px 15px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        .page:first-child {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-right: 1px dashed rgba(0,0,0,0.1);
-        }
-
-        .page:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-
-        .page-num {
             position: absolute;
-            bottom: 10px;
-            right: 15px;
-            font-size: 0.8rem;
-            color: #999;
+            text-align: center;
         }
 
-        .page-left .page-num {
-            right: auto;
-            left: 15px;
+        .swipe-out { animation: swipeOut 0.8s forwards ease-in-out; }
+        .swipe-in { animation: swipeIn 0.8s forwards ease-out; }
+
+        @keyframes swipeOut { to { transform: translateX(-150vw) rotate(-15deg); opacity: 0; } }
+        @keyframes swipeIn { from { transform: translateX(150vw) rotate(15deg); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* --- 4. REAL 3D BOOK SYSTEM --- */
+        #bookScreen { display: none; }
+        
+        .book {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            transition: transform 0.5s;
+            perspective: 1500px;
+            cursor: pointer;
+            margin: 0 auto;
         }
 
-        .page-content p {
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 15px;
+        .paper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-style: preserve-3d;
+            transform-origin: left center;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            z-index: 1;
         }
 
-        .page-header h3 {
-            font-size: 1.1rem;
-            color: #ff4757;
-            margin-top: 0;
-            border-bottom: 2px dashed #fecfef;
-            padding-bottom: 5px;
-        }
-
-        /* --- CONTENT STYLING --- */
-        .main-img {
-            width: 220px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-        }
-
-        h1 {
-            color: #ff4757;
-            font-size: 1.5rem;
-            margin: 15px 0;
-            line-height: 1.4;
-        }
-
-        .btn-group {
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin-top: 25px;
-            height: 60px;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: inset 3px 0 10px rgba(0,0,0,0.1);
+            background: #fffdf5; /* Paper Color */
         }
 
-        button {
-            padding: 12px 20px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.1s; 
-        }
+        .back { transform: rotateY(180deg); border-radius: 15px 5px 5px 15px; }
 
-        .action-btn {
-            background-color: #ff4757;
-            color: white;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-            animation: pulseBtn 2s infinite; 
-            z-index: 5;
-        }
+        .flipped { transform: rotateY(-180deg); }
 
-        @keyframes pulseBtn {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+        /* Book Text Styling */
+        .page-content h3 { color: #ff4757; font-size: 1.2rem; margin-bottom: 10px; border-bottom: 2px dashed #ff9a9e; }
+        .page-content p { color: #555; font-size: 0.9rem; line-height: 1.6; }
+        .tap-hint { font-size: 0.8rem; color: #aaa; margin-top: 10px; font-style: italic; }
 
-        .action-btn:hover {
-            background-color: #ff6b81;
-            animation: none;
-            transform: scale(1.1);
-        }
-
-        #noBtn {
-            background-color: #f1f2f6;
-            color: #2f3542;
-            border: 2px solid #ced6e0;
-            z-index: 100;
-        }
-
-        /* Hide screens initially */
-        #loaderScreen, #envelopeScreen, #closedBookScreen, #openBookScreen { 
-            display: none; 
-            opacity: 0; 
-        }
-
-        .heart-loader {
-            font-size: 50px;
-            animation: heartbeat 0.6s infinite alternate;
-            margin: 20px 0;
-        }
-
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.4); }
-        }
-
-        /* --- FALLING FLOWERS --- */
-        .flower {
-            position: absolute;
-            font-size: 24px;
-            animation: fall linear forwards;
-            z-index: 20;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-        }
+        /* --- 5. BUTTONS & UI --- */
+        .main-img { width: 180px; border-radius: 15px; margin-bottom: 10px; }
+        h1 { color: #ff4757; font-size: 1.4rem; }
+        .action-btn { background: #ff4757; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; margin-top: 15px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        #noBtn { background: #eee; border: 1px solid #ccc; position: absolute; padding: 10px 20px; border-radius: 20px; cursor: pointer; }
+        #loaderScreen, #envelopeScreen { display: none; }
+        .flower { position: absolute; font-size: 25px; animation: fall linear forwards; z-index: 100; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(540deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" class="bg-gif bg-gif-1" alt="bg1">
-    <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" class="bg-gif bg-gif-2" alt="bg2">
-
     <div class="container" id="questionScreen">
-        <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" class="main-img" alt="Cute Bears Asking">
-        <h1 id="questionText">Chal sach sach bata... Am I the cutest, most amazing dramebaaz in your life? 🥺✨</h1>
-        
-        <div class="btn-group">
-            <button id="yesBtn" class="action-btn">Haan re baba! 💖</button>
-            <button id="noBtn">Nahi, tu annoying hai 😒</button>
+        <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" class="main-img">
+        <h1>Chal sach sach bata... Am I the cutest bestie in your life? 🥺✨</h1>
+        <div style="height: 60px; display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 20px;">
+            <button class="action-btn" onclick="startJourney()">Haan re baba! 💖</button>
+            <button id="noBtn">Nahi re 😒</button>
         </div>
     </div>
 
     <div class="container" id="loaderScreen">
-        <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" class="main-img" alt="Typing Bear">
-        <h1>Scanning teri thodi si akal... ⏳😂</h1>
-        <div class="heart-loader">💖</div>
+        <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" class="main-img">
+        <h1>Scanning tera dimaag... ⏳😂</h1>
+        <div style="font-size: 40px; animation: pulse 0.8s infinite;">💖</div>
     </div>
 
     <div class="container" id="envelopeScreen">
-        <img src="https://media.tenor.com/PZtGqW6vDQQAAAAi/peach-goma-love.gif" class="main-img" alt="Love Letter">
-        <h1>Wait! Ek top-secret letter hai tere liye... 💌</h1>
-        <div class="btn-group">
-            <button id="openEnvBtn" class="action-btn">Open Letter 🎀</button>
-        </div>
+        <img src="https://media.tenor.com/PZtGqW6vDQQAAAAi/peach-goma-love.gif" class="main-img">
+        <h1>Wait! Ek special memory book hai tere liye... 💌</h1>
+        <button class="action-btn" onclick="goToBook()">Open Memory Book 📖</button>
     </div>
 
-    <div class="container" id="closedBookScreen">
-        <img src="https://media.tenor.com/5lR79r4f_zAAAAAi/peach-goma-love.gif" class="main-img" id="bookImage" alt="Closed Book">
-        <h1>Ohho! Toh yeh hai humari special book! ✨ Ab isse kholo!</h1>
-        <div class="btn-group">
-            <button id="openBookBtn" class="action-btn">Open Our Book 📖</button>
-        </div>
-    </div>
+    <div id="bookScreen">
+        <div class="book" id="myBook" onclick="flipNext()">
+            
+            <div class="paper" id="p3" style="z-index: 1;">
+                <div class="front">
+                    <div class="page-content">
+                        <h3>Happy Bestie Day! ♾️</h3>
+                        <img src="https://media.tenor.com/I2qA3lBvGf4AAAAi/peach-goma-love.gif" style="width: 100px;">
+                        <p>Tu officially stuck hai mere saath forever. I love you, meri pagal bestie! 💖🌸</p>
+                    </div>
+                </div>
+                <div class="back"></div>
+            </div>
 
-    <div class="container" id="openBookScreen">
-        <div class="book-container">
-            <div class="page page-left">
-                <div class="page-header"><h3>Humari Pagalpan - Vol 1 🎀</h3></div>
-                <div class="page-content">
-                    <p>Tu sabse pagal aur crazy hai, par wahi tujhe unique banata hai! <br> Meri har drama aur unhinged bakwas sunne ke liye bahut bada THANK YOU! 🥰 <br> Tere jaisa koi aur nahi ho sakta.</p>
+            <div class="paper" id="p2" style="z-index: 2;">
+                <div class="front">
+                    <div class="page-content">
+                        <h3>Tujhe kyun pyaar hai? ✨</h3>
+                        <p>Kyunki tu mere bina judge kiye meri har unhinged baat sunti hai! Humari gossip aur 2 AM rants are the best. 💅</p>
+                        <p class="tap-hint">Tap again! 👆</p>
+                    </div>
                 </div>
-                <div class="page-num">Page 1</div>
-            </div>
-            <div class="page page-right">
-                <div class="page-header"><h3>Tujhe Kyo Pyaar Hai? ✨</h3></div>
-                <div class="page-content">
-                    <p>Humein sath kitni masti aur gossip karte ho gaya hai! <br> Aage bhi humein bahut saari crazy memories aur unhinged adventures karne hain. <br> Tu sabse best because tu mere bina kuch soche meri har problem ko apni samajhti hai!</p>
+                <div class="back">
+                    <img src="https://media.tenor.com/5lR79r4f_zAAAAAi/peach-goma-love.gif" style="width: 100px;">
+                    <p style="color: #ff4757;">Soulmates! 👯‍♀️</p>
                 </div>
-                <div class="page-num">Page 2</div>
             </div>
+
+            <div class="paper" id="p1" style="z-index: 3;">
+                <div class="front">
+                    <div class="page-content">
+                        <h3>Humari Pagalpan Vol. 1 🎀</h3>
+                        <p>Tujhe pata hai? Tu duniya ki sabse amazing dramebaaz hai! <br><br> Is book ko kholne ke liye tap kar!</p>
+                        <p class="tap-hint">Tap to Open! 👆</p>
+                    </div>
+                </div>
+                <div class="back">
+                    <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" style="width: 100px;">
+                    <p style="color: #ff4757;">Gossip Partner! 💖</p>
+                </div>
+            </div>
+
         </div>
-        <img src="https://media.tenor.com/I2qA3lBvGf4AAAAi/peach-goma-love.gif" class="main-img" alt="Hugging Bears">
-        <h1 style="margin-top: 10px;">Tu officially stuck mere sath! <br><strong>Happy Best Friend Day, Pagli! ♾️💕🌸</strong></h1>
     </div>
 
     <script>
-        // --- 1. MAGIC CURSOR TRAIL (REDUCED FREQUENCY) ---
-        let lastTrailTime = 0;
-        
-        function handleTrail(x, y) {
-            const now = Date.now();
-            if (now - lastTrailTime > 100) {
-                createTrail(x, y);
-                lastTrailTime = now;
+        // --- CURSOR EFFECTS ---
+        document.addEventListener('mousemove', (e) => createSparkle(e.pageX, e.pageY));
+        document.addEventListener('touchmove', (e) => createSparkle(e.touches[0].pageX, e.touches[0].pageY));
+
+        function createSparkle(x, y) {
+            if (Math.random() > 0.1) return;
+            const s = document.createElement('div');
+            s.className = 'cursor-trail';
+            s.innerHTML = '✨';
+            s.style.left = x + 'px'; s.style.top = y + 'px';
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 1000);
+        }
+
+        // --- FLOATING BG ICONS ---
+        setInterval(() => {
+            const icons = ['💖', '✨', '🌸', '🎀'];
+            const i = document.createElement('div');
+            i.className = 'floating-bg';
+            i.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+            i.style.left = Math.random()*100 + 'vw';
+            i.style.animationDuration = Math.random()*5 + 5 + 's';
+            document.body.appendChild(i);
+            setTimeout(() => i.remove(), 10000);
+        }, 500);
+
+        // --- RUNAWAY BUTTON ---
+        const noBtn = document.getElementById('noBtn');
+        noBtn.addEventListener('mouseover', runaway);
+        noBtn.addEventListener('touchstart', runaway);
+        function runaway() {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        // --- NAVIGATION ---
+        function startJourney() {
+            noBtn.remove();
+            const q = document.getElementById('questionScreen');
+            const l = document.getElementById('loaderScreen');
+            q.classList.add('swipe-out');
+            setTimeout(() => {
+                q.style.display = 'none';
+                l.style.display = 'block';
+                l.classList.add('swipe-in');
+                setTimeout(() => {
+                    l.classList.add('swipe-out');
+                    setTimeout(() => {
+                        l.style.display = 'none';
+                        const env = document.getElementById('envelopeScreen');
+                        env.style.display = 'block';
+                        env.classList.add('swipe-in');
+                    }, 800);
+                }, 3000);
+            }, 800);
+        }
+
+        function goToBook() {
+            const env = document.getElementById('envelopeScreen');
+            const b = document.getElementById('bookScreen');
+            env.classList.add('swipe-out');
+            setTimeout(() => {
+                env.style.display = 'none';
+                b.style.display = 'block';
+                b.classList.add('swipe-in');
+            }, 800);
+        }
+
+        // --- 3D BOOK LOGIC ---
+        let currentPage = 1;
+        function flipNext() {
+            if (currentPage <= 2) {
+                const p = document.getElementById('p' + currentPage);
+                p.classList.add('flipped');
+                if (currentPage === 2) {
+                    setTimeout(dropFlowers, 500);
+                }
+                currentPage++;
             }
         }
 
-        document.addEventListener('mousemove', function(e) {
-            handleTrail(e.pageX, e.pageY);
-        });
-
-        document.addEventListener('touchmove', function(e) {
-            handleTrail(e.touches[0].pageX, e.touches[0].pageY);
-        });
-
-        function createTrail(x, y) {
-            const icons = ['✨', '💖']; 
-            let trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            trail.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-            
-            trail.style.left = (x - 10) + 'px';
-            trail.style.top = (y - 10) + 'px';
-            
-            document.body.appendChild(trail);
-            
-            setTimeout(() => { trail.remove(); }, 800);
-        }
-
-        // --- 2. THE RUNAWAY NO BUTTON ---
-        const noBtn = document.getElementById('noBtn');
-        const questionScreen = document.getElementById('questionScreen');
-
-        function runAway() {
-            noBtn.style.position = 'fixed';
-            
-            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-            
-            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
-            
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        }
-
-        noBtn.addEventListener('mouseover', runAway);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); 
-            runAway();
-        });
-
-        // --- 3. PAGE TURN & SWIPE LOGIC ---
-        const yesBtn = document.getElementById('yesBtn');
-        const loaderScreen = document.getElementById('loaderScreen');
-        const envelopeScreen = document.getElementById('envelopeScreen');
-        const closedBookScreen = document.getElementById('closedBookScreen');
-        const openBookScreen = document.getElementById('openBookScreen');
-        const openEnvBtn = document.getElementById('openEnvBtn');
-        const openBookBtn = document.getElementById('openBookBtn');
-
-        function transitionScreens(hideScreen, showScreen) {
-            hideScreen.classList.add('swipe-out');
-            setTimeout(() => {
-                hideScreen.style.display = 'none';
-                hideScreen.classList.remove('swipe-out');
-                
-                showScreen.style.display = 'block';
-                showScreen.classList.add('swipe-in');
-            }, 800); 
-        }
-
-        // Step 1: Click "Haan re baba!" -> Goes to Loader
-        yesBtn.addEventListener('click', () => {
-            noBtn.remove(); // Delete the annoying button
-            transitionScreens(questionScreen, loaderScreen);
-            
-            // Step 2: Loader finishes -> Goes to Envelope Screen
-            setTimeout(() => {
-                transitionScreens(loaderScreen, envelopeScreen);
-            }, 3500); // 3.5 seconds of fake loading
-        });
-
-        // Step 3: Click "Open Letter" -> Goes to Closed Book
-        openEnvBtn.addEventListener('click', () => {
-            transitionScreens(envelopeScreen, closedBookScreen);
-        });
-
-        // Step 4: Click "Open Book" -> Goes to Open Book with Messages & Drops Flowers
-        openBookBtn.addEventListener('click', () => {
-            transitionScreens(closedBookScreen, openBookScreen);
-            setTimeout(startFlowers, 800); // Drop flowers right as the card slides in
-        });
-
-        // --- 4. FLOWER RAIN ---
-        function startFlowers() {
-            const flowers = ['🌸', '🌺', '🌻', '🌼', '🌷', '✨', '💖'];
-            for(let i = 0; i < 80; i++) { // Drops 80 flowers
-                let f = document.createElement('div');
-                f.classList.add('flower');
-                f.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-                
-                f.style.left = Math.random() * 100 + 'vw';
-                f.style.fontSize = (Math.random() * 20 + 15) + 'px'; 
-                f.style.animationDuration = (Math.random() * 3 + 3) + 's'; 
-                f.style.animationDelay = (Math.random() * 2) + 's';
-                
-                document.body.appendChild(f);
-                
-                // Keep the page clean by removing them after they fall
-                setTimeout(() => { f.remove(); }, 8000);
+        function dropFlowers() {
+            const fList = ['🌸', '🌺', '🌷', '✨', '💖'];
+            for(let i=0; i<50; i++) {
+                setTimeout(() => {
+                    const f = document.createElement('div');
+                    f.className = 'flower';
+                    f.innerHTML = fList[Math.floor(Math.random()*fList.length)];
+                    f.style.left = Math.random()*100 + 'vw';
+                    f.style.animationDuration = Math.random()*3 + 2 + 's';
+                    document.body.appendChild(f);
+                    setTimeout(() => f.remove(), 5000);
+                }, i * 100);
             }
         }
     </script>
