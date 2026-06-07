@@ -3,117 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Best Friend Day! 💖</title>
+    <title>Top Secret: Bestie Files 📂</title>
     <style>
-        /* This is the CSS - It makes everything look pretty */
-        body {
-            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+        /* CSS: Advanced Styling & Animations */
+        :root {
+            --primary: #ff758c;
+            --secondary: #ff7eb3;
+            --bg-color: #1a1a2e;
+            --text-light: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Gradients */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
             height: 100vh;
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #e94560);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease-out;
+        }
+        
+        .hacker-text {
+            color: #0f0;
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #0f0;
+        }
+
+        /* Main Content Container (Glassmorphism) */
+        #main-content {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 20px;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            overflow: hidden;
-            margin: 0;
         }
-        .card {
-            background: white;
-            padding: 40px;
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            transform: scale(0);
-            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            max-width: 80%;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            text-align: center;
+            margin-bottom: 30px;
+            transform: translateY(50px);
+            opacity: 0;
         }
-        @keyframes popIn {
-            to { transform: scale(1); }
+
+        .slide-up {
+            animation: slideUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         h1 {
-            color: #ff6b6b;
-            margin-top: 0;
+            background: -webkit-linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        button {
-            background: #ff6b6b;
-            color: white;
+
+        /* Typewriter Effect Setup */
+        .typewriter-container {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+
+        /* Fancy Interactive Button */
+        .glow-on-hover {
+            width: 250px;
+            height: 60px;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 50px;
+            outline: none;
+            color: #fff;
+            background: #111;
             cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
             transition: 0.3s;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
-        button:hover {
-            background: #ff4757;
-            transform: scale(1.1);
-        }
-        .hidden-message {
-            display: none;
-            margin-top: 20px;
-            font-size: 20px;
-            color: #333;
-            line-height: 1.5;
-        }
-        .heart {
+
+        .glow-on-hover:before {
+            content: '';
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
             position: absolute;
-            font-size: 24px;
-            animation: floatUp linear infinite;
+            top: -2px; left:-2px;
+            background-size: 400%;
             z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing 20s linear infinite;
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+            border-radius: 30px;
         }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+
+        .glow-on-hover:active { color: #111; }
+        .glow-on-hover:active:after { background: transparent; }
+        .glow-on-hover:hover:before { opacity: 1; }
+
+        .glow-on-hover:after {
+            z-index: -1;
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            background: #111;
+            left: 0; top: 0;
+            border-radius: 30px;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        /* Hidden Content Sections */
+        .secret-section {
+            display: none;
+            text-align: left;
+            margin-top: 30px;
+            border-top: 2px dashed rgba(255,255,255,0.3);
+            padding-top: 20px;
+        }
+
+        .secret-section h2 { color: var(--secondary); }
+        .secret-section ul { padding-left: 20px; }
+        .secret-section li { margin-bottom: 15px; font-size: 1.1em; }
+
+        /* Floating Particles Canvas */
+        canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Happy Best Friend Day! ✨</h1>
-        <p>To the absolute best bestie in the world...</p>
-        
-        <button id="magicButton" onclick="revealMessage()">Click to Unlock My Secret Message</button>
-        
-        <div id="msg" class="hidden-message">
-            <p><strong>Surprise! 🎉</strong></p>
-            <p>You are amazing, and I am so lucky to have you as my best friend. Thanks for all the laughs and memories!</p>
-            <p><em>(Yes, I actually coded this just for you! 👩‍💻😎)</em></p>
+    <div class="bg-animation"></div>
+    <canvas id="canvas"></canvas>
+
+    <div id="loader">
+        <div class="hacker-text" id="hack-text">Bypassing security protocols...</div>
+        <div class="hacker-text" id="progress">0%</div>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <div class="glass-card slide-up" style="animation-delay: 0.5s;">
+            <h1>For My Bestie</h1>
+            
+            <div class="typewriter-container" id="typewriter"></div>
+            
+            <button class="glow-on-hover" onclick="unlockSecrets()" id="unlockBtn">DECRYPT TOP SECRETS</button>
+
+            <div class="secret-section" id="secrets">
+                <h2>📂 Classified File: The Evidence</h2>
+                <p>I gathered the data, and the results are indisputable. You are 100% the best person ever. Here is why:</p>
+                <ul>
+                    <li><strong>Fact #1:</strong> You tolerate my craziness, which legally makes you a saint.</li>
+                    <li><strong>Fact #2:</strong> Our inside jokes make absolutely no sense to anyone else, and I love that for us.</li>
+                    <li><strong>Fact #3:</strong> No matter what happens, I know you've got my back (and I've got yours).</li>
+                </ul>
+                
+                <h2>📂 My Promise to You</h2>
+                <p>As long as I know how to write code (and even if I forget), I will always be here to hype you up, listen to your rants, and send you unhinged memes at 2 AM.</p>
+                
+                <h3 style="text-align: center; color: #fff; margin-top: 40px;">Happy Best Friend Day! ♾️💖</h3>
+            </div>
         </div>
     </div>
 
     <script>
-        /* This is the JavaScript - It makes the interactive magic happen */
-        function revealMessage() {
-            // Show the hidden message
-            document.getElementById('msg').style.display = 'block';
-            // Hide the button after clicking
-            document.getElementById('magicButton').style.display = 'none';
+        /* JavaScript: The Engine Behind the Magic */
+        
+        // 1. Loading Screen Logic
+        let progress = 0;
+        const progressEl = document.getElementById('progress');
+        const loader = document.getElementById('loader');
+        const mainContent = document.getElementById('main-content');
+        
+        const hackPhrases = [
+            "Accessing Bestie Mainframe...",
+            "Decrypting inside jokes...",
+            "Downloading good vibes...",
+            "Access Granted."
+        ];
+        
+        let phraseIndex = 0;
+
+        const loadingInterval = setInterval(() => {
+            progress += Math.floor(Math.random() * 15) + 5;
+            if (progress >= 100) progress = 100;
+            progressEl.innerText = progress + "%";
             
-            // Create a bunch of floating hearts!
-            for(let i = 0; i < 50; i++) {
-                setTimeout(createHeart, i * 50);
+            if (progress % 30 === 0 && phraseIndex < hackPhrases.length - 1) {
+                phraseIndex++;
+                document.getElementById('hack-text').innerText = hackPhrases[phraseIndex];
+            }
+
+            if (progress === 100) {
+                clearInterval(loadingInterval);
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        mainContent.style.display = 'flex';
+                        startTypewriter();
+                    }, 1000);
+                }, 500);
+            }
+        }, 300);
+
+        // 2. Typewriter Effect
+        const textToType = "Hey. I could have just sent a normal text for Best Friend Day... but you know I have to be extra. So I built this secure server just to tell you how much I appreciate you.";
+        let i = 0;
+        
+        function startTypewriter() {
+            if (i < textToType.length) {
+                document.getElementById("typewriter").innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(startTypewriter, 40); // Speed of typing
             }
         }
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            const emojis = ['💖', '✨', '🌸', '🥺'];
-            heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-            heart.classList.add('heart');
+        // 3. Reveal Hidden Sections
+        function unlockSecrets() {
+            const btn = document.getElementById('unlockBtn');
+            const secrets = document.getElementById('secrets');
             
-            // Randomize position and animation speed
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            btn.style.display = 'none';
+            secrets.style.display = 'block';
             
-            document.body.appendChild(heart);
-            
-            // Remove the heart after it floats away to keep the code running smoothly
-            setTimeout(() => { heart.remove(); }, 5000);
+            // Trigger a massive particle explosion
+            createExplosion(window.innerWidth / 2, window.innerHeight / 2, 100);
         }
+
+        // 4. Advanced Interactive Particle System (Sparkles on click/move)
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+
+        class Particle {
+            constructor(x, y, isExplosion = false) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = (Math.random() * 3 - 1.5) * (isExplosion ? 5 : 1);
+                this.speedY = (Math.random() * 3 - 1.5) * (isExplosion ? 5 : 1);
+                this.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                this.life = 100;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.1) this.size -= 0.05;
+                this.life--;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function handleParticles() {
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) {
+                    particlesArray.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function createExplosion(x, y, amount) {
+            for (let i = 0; i < amount; i++) {
+                particlesArray.push(new Particle(x, y, true));
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.5) {
+                particlesArray.push(new Particle(e.x, e.y));
+            }
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            particlesArray.push(new Particle(e.touches[0].clientX, e.touches[0].clientY));
+        });
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animateCanvas);
+        }
+        
+        animateCanvas();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
 </html>
