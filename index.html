@@ -90,6 +90,65 @@
             100% { transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
         }
 
+        /* --- BOOK VIEW LAYOUT --- */
+        .book-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            text-align: left;
+            padding: 20px 10px;
+            min-height: 250px;
+        }
+
+        .page {
+            flex: 1;
+            background: #fffdf5;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .page:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: 1px dashed rgba(0,0,0,0.1);
+        }
+
+        .page:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .page-num {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .page-left .page-num {
+            right: auto;
+            left: 15px;
+        }
+
+        .page-content p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .page-header h3 {
+            font-size: 1.1rem;
+            color: #ff4757;
+            margin-top: 0;
+            border-bottom: 2px dashed #fecfef;
+            padding-bottom: 5px;
+        }
+
         /* --- CONTENT STYLING --- */
         .main-img {
             width: 220px;
@@ -151,7 +210,7 @@
         }
 
         /* Hide screens initially */
-        #loaderScreen, #envelopeScreen, #finalScreen { 
+        #loaderScreen, #envelopeScreen, #closedBookScreen, #openBookScreen { 
             display: none; 
             opacity: 0; 
         }
@@ -210,13 +269,33 @@
         </div>
     </div>
 
-    <div class="container" id="finalScreen">
+    <div class="container" id="closedBookScreen">
+        <img src="https://media.tenor.com/5lR79r4f_zAAAAAi/peach-goma-love.gif" class="main-img" id="bookImage" alt="Closed Book">
+        <h1>Ohho! Toh yeh hai humari special book! ✨ Ab isse kholo!</h1>
+        <div class="btn-group">
+            <button id="openBookBtn" class="action-btn">Open Our Book 📖</button>
+        </div>
+    </div>
+
+    <div class="container" id="openBookScreen">
+        <div class="book-container">
+            <div class="page page-left">
+                <div class="page-header"><h3>Humari Pagalpan - Vol 1 🎀</h3></div>
+                <div class="page-content">
+                    <p>Tu sabse pagal aur crazy hai, par wahi tujhe unique banata hai! <br> Meri har drama aur unhinged bakwas sunne ke liye bahut bada THANK YOU! 🥰 <br> Tere jaisa koi aur nahi ho sakta.</p>
+                </div>
+                <div class="page-num">Page 1</div>
+            </div>
+            <div class="page page-right">
+                <div class="page-header"><h3>Tujhe Kyo Pyaar Hai? ✨</h3></div>
+                <div class="page-content">
+                    <p>Humein sath kitni masti aur gossip karte ho gaya hai! <br> Aage bhi humein bahut saari crazy memories aur unhinged adventures karne hain. <br> Tu sabse best because tu mere bina kuch soche meri har problem ko apni samajhti hai!</p>
+                </div>
+                <div class="page-num">Page 2</div>
+            </div>
+        </div>
         <img src="https://media.tenor.com/I2qA3lBvGf4AAAAi/peach-goma-love.gif" class="main-img" alt="Hugging Bears">
-        <h1>Yayyy! Tere paas koi aur option tha bhi nahi! 😂</h1>
-        <p style="font-size: 1.1rem; color: #57606f; line-height: 1.5; margin-top: 15px;">
-            Tu officially stuck hai mere saath forever. Tu kitni bhi pagal ho, meri sabse favorite bestie hai! Thank you for always listening to my drama. <br><br>
-            <strong>Happy Best Friend Day, meri jaan! ♾️💕🌸</strong>
-        </p>
+        <h1 style="margin-top: 10px;">Tu officially stuck mere sath! <br><strong>Happy Best Friend Day, Pagli! ♾️💕🌸</strong></h1>
     </div>
 
     <script>
@@ -225,7 +304,6 @@
         
         function handleTrail(x, y) {
             const now = Date.now();
-            // Only drop a sparkle every 100 milliseconds so it isn't overwhelming
             if (now - lastTrailTime > 100) {
                 createTrail(x, y);
                 lastTrailTime = now;
@@ -241,7 +319,7 @@
         });
 
         function createTrail(x, y) {
-            const icons = ['✨', '💖']; // Kept it simple and clean
+            const icons = ['✨', '💖']; 
             let trail = document.createElement('div');
             trail.className = 'cursor-trail';
             trail.innerHTML = icons[Math.floor(Math.random() * icons.length)];
@@ -281,8 +359,10 @@
         const yesBtn = document.getElementById('yesBtn');
         const loaderScreen = document.getElementById('loaderScreen');
         const envelopeScreen = document.getElementById('envelopeScreen');
-        const finalScreen = document.getElementById('finalScreen');
+        const closedBookScreen = document.getElementById('closedBookScreen');
+        const openBookScreen = document.getElementById('openBookScreen');
         const openEnvBtn = document.getElementById('openEnvBtn');
+        const openBookBtn = document.getElementById('openBookBtn');
 
         function transitionScreens(hideScreen, showScreen) {
             hideScreen.classList.add('swipe-out');
@@ -306,24 +386,28 @@
             }, 3500); // 3.5 seconds of fake loading
         });
 
-        // Step 3: Click "Open Letter" -> Goes to Final Screen & Drops Flowers
+        // Step 3: Click "Open Letter" -> Goes to Closed Book
         openEnvBtn.addEventListener('click', () => {
-            transitionScreens(envelopeScreen, finalScreen);
+            transitionScreens(envelopeScreen, closedBookScreen);
+        });
+
+        // Step 4: Click "Open Book" -> Goes to Open Book with Messages & Drops Flowers
+        openBookBtn.addEventListener('click', () => {
+            transitionScreens(closedBookScreen, openBookScreen);
             setTimeout(startFlowers, 800); // Drop flowers right as the card slides in
         });
 
         // --- 4. FLOWER RAIN ---
         function startFlowers() {
-            const flowers = ['🌸', '🌺', '🌻', '🌼', '🌷', '✨'];
+            const flowers = ['🌸', '🌺', '🌻', '🌼', '🌷', '✨', '💖'];
             for(let i = 0; i < 80; i++) { // Drops 80 flowers
                 let f = document.createElement('div');
                 f.classList.add('flower');
                 f.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
                 
-                // Randomize starting position, drop speed, and delay
                 f.style.left = Math.random() * 100 + 'vw';
-                f.style.fontSize = (Math.random() * 20 + 15) + 'px'; // Random size between 15px and 35px
-                f.style.animationDuration = (Math.random() * 3 + 3) + 's'; // 3 to 6 seconds to fall
+                f.style.fontSize = (Math.random() * 20 + 15) + 'px'; 
+                f.style.animationDuration = (Math.random() * 3 + 3) + 's'; 
                 f.style.animationDelay = (Math.random() * 2) + 's';
                 
                 document.body.appendChild(f);
