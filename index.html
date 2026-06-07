@@ -11,7 +11,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            /* Animated gradient background */
             background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #ffdde1);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -28,21 +27,29 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- CUTE FLOATING BACKGROUND ICONS --- */
-        .floating-bg {
-            position: absolute;
-            bottom: -10vh;
-            opacity: 0.6;
-            animation: floatUpBg linear infinite;
-            z-index: 0;
+        /* --- BACKGROUND GIFS --- */
+        .bg-gif {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.15; /* Keeps them faint so they don't hide the text */
             pointer-events: none;
+            width: 300px;
+        }
+        .bg-gif-1 { top: 5%; left: 5%; }
+        .bg-gif-2 { bottom: 5%; right: 5%; transform: scaleX(-1); }
+
+        /* --- MAGIC CURSOR TRAIL --- */
+        .cursor-trail {
+            position: absolute;
+            pointer-events: none;
+            font-size: 24px;
+            z-index: 9999;
+            animation: fadeOutTrail 1s linear forwards;
         }
 
-        @keyframes floatUpBg {
-            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-120vh) rotate(360deg) scale(1.2); opacity: 0; }
+        @keyframes fadeOutTrail {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.5) translateY(-30px); }
         }
 
         /* --- MAIN CARD CONTAINER --- */
@@ -54,7 +61,7 @@
             max-width: 90%;
             width: 420px;
             z-index: 10;
-            position: absolute; /* Changed for the swipe animation */
+            position: absolute; 
             animation: float 4s ease-in-out infinite;
         }
 
@@ -84,7 +91,7 @@
         }
 
         /* --- CONTENT STYLING --- */
-        img {
+        .main-img {
             width: 220px;
             border-radius: 15px;
             margin-bottom: 15px;
@@ -97,9 +104,11 @@
             line-height: 1.4;
         }
 
+        /* Buttons are perfectly aligned here using Flexbox */
         .btn-group {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 15px;
             margin-top: 25px;
             height: 60px;
@@ -112,14 +121,15 @@
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.2s;
+            transition: 0.1s; /* Fast transition for the dodge */
         }
 
         #yesBtn {
             background-color: #ff4757;
             color: white;
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-            animation: pulseBtn 2s infinite; /* Adds a heartbeat effect to the yes button */
+            animation: pulseBtn 2s infinite; 
+            z-index: 5;
         }
 
         @keyframes pulseBtn {
@@ -138,14 +148,14 @@
             background-color: #f1f2f6;
             color: #2f3542;
             border: 2px solid #ced6e0;
-            position: absolute; /* Needs to be absolute to run away cleanly */
+            /* Position starts as normal so it aligns in a straight row! */
             z-index: 100;
         }
 
         /* Hide screens initially */
         #loaderScreen, #finalScreen { 
             display: none; 
-            opacity: 0; /* Prep for swipe-in */
+            opacity: 0; 
         }
 
         .heart-loader {
@@ -176,8 +186,11 @@
 </head>
 <body>
 
+    <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" class="bg-gif bg-gif-1" alt="bg1">
+    <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" class="bg-gif bg-gif-2" alt="bg2">
+
     <div class="container" id="questionScreen">
-        <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" alt="Cute Bears Asking">
+        <img src="https://media.tenor.com/w1E2_Z2ZEX4AAAAi/peach-goma.gif" class="main-img" alt="Cute Bears Asking">
         <h1 id="questionText">Chal sach sach bata... Am I the cutest, most amazing dramebaaz in your life? 🥺✨</h1>
         
         <div class="btn-group">
@@ -187,13 +200,13 @@
     </div>
 
     <div class="container" id="loaderScreen">
-        <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" alt="Typing Bear">
+        <img src="https://media.tenor.com/N2XQ3A1Bhy4AAAAi/peach-goma.gif" class="main-img" alt="Typing Bear">
         <h1>Scanning teri thodi si akal... ⏳😂</h1>
         <div class="heart-loader">💖</div>
     </div>
 
     <div class="container" id="finalScreen">
-        <img src="https://media.tenor.com/I2qA3lBvGf4AAAAi/peach-goma-love.gif" alt="Hugging Bears">
+        <img src="https://media.tenor.com/I2qA3lBvGf4AAAAi/peach-goma-love.gif" class="main-img" alt="Hugging Bears">
         <h1>Yayyy! Tere paas koi aur option tha bhi nahi waise! 😂</h1>
         <p style="font-size: 1.1rem; color: #57606f; line-height: 1.5; margin-top: 15px;">
             Tu officially stuck hai mere saath forever. Tu kitni bhi pagal ho, meri favorite bestie hai! <br><br>
@@ -202,40 +215,46 @@
     </div>
 
     <script>
-        // --- 1. GENERATE BACKGROUND ICONS ---
-        function createBackgroundEffect() {
-            const icons = ['💖', '✨', '🌸', '☁️', '🎀', '🦋'];
-            const effect = document.createElement('div');
-            effect.innerText = icons[Math.floor(Math.random() * icons.length)];
-            effect.classList.add('floating-bg');
+        // --- 1. MAGIC CURSOR TRAIL ---
+        document.addEventListener('mousemove', function(e) {
+            createTrail(e.pageX, e.pageY);
+        });
+
+        document.addEventListener('touchmove', function(e) {
+            createTrail(e.touches[0].pageX, e.touches[0].pageY);
+        });
+
+        function createTrail(x, y) {
+            const icons = ['✨', '💖', '🌸'];
+            let trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.innerHTML = icons[Math.floor(Math.random() * icons.length)];
             
-            effect.style.left = Math.random() * 100 + 'vw';
-            effect.style.fontSize = Math.random() * 20 + 15 + 'px';
-            effect.style.animationDuration = Math.random() * 6 + 6 + 's'; 
+            // Position it exactly at the cursor
+            trail.style.left = (x - 10) + 'px';
+            trail.style.top = (y - 10) + 'px';
             
-            document.body.appendChild(effect);
-            setTimeout(() => { effect.remove(); }, 12000);
+            document.body.appendChild(trail);
+            
+            // Remove after animation finishes to prevent lag
+            setTimeout(() => { trail.remove(); }, 1000);
         }
-        setInterval(createBackgroundEffect, 400);
 
         // --- 2. THE RUNAWAY NO BUTTON ---
         const noBtn = document.getElementById('noBtn');
         const questionScreen = document.getElementById('questionScreen');
-        
-        // Put the NO button exactly next to the YES button to start
-        noBtn.style.left = '55%'; 
-        noBtn.style.top = '78%';
 
         function runAway() {
-            // Get screen boundaries so it doesn't jump off the edge
+            // Change position to fixed ONLY when she tries to touch it
+            noBtn.style.position = 'fixed';
+            
+            // Get screen boundaries
             const maxX = window.innerWidth - noBtn.offsetWidth - 20;
             const maxY = window.innerHeight - noBtn.offsetHeight - 20;
             
             const randomX = Math.max(20, Math.floor(Math.random() * maxX));
             const randomY = Math.max(20, Math.floor(Math.random() * maxY));
             
-            // Pop the button out of the card and onto the main screen
-            noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
@@ -246,39 +265,29 @@
             runAway();
         });
 
-        // --- 3. THE PAGE TURN LOGIC ---
+        // --- 3. THE PAGE TURN SWIPE LOGIC ---
         const yesBtn = document.getElementById('yesBtn');
         const loaderScreen = document.getElementById('loaderScreen');
         const finalScreen = document.getElementById('finalScreen');
 
-        // Function to smoothly swap screens
-        function transitionScreens(hideScreen, showScreen, delay) {
-            // Swipe out the current screen
+        function transitionScreens(hideScreen, showScreen) {
             hideScreen.classList.add('swipe-out');
-            
             setTimeout(() => {
                 hideScreen.style.display = 'none';
                 hideScreen.classList.remove('swipe-out');
                 
-                // Swipe in the new screen
                 showScreen.style.display = 'block';
                 showScreen.classList.add('swipe-in');
-            }, 800); // Wait for the swipe-out animation to finish
+            }, 800); 
         }
 
-        // When she clicks YES!
         yesBtn.addEventListener('click', () => {
-            // Remove the NO button permanently so it doesn't float around
-            noBtn.remove();
+            noBtn.remove(); // Delete the annoying button
             
-            // Transition 1: Question -> Loader
             transitionScreens(questionScreen, loaderScreen);
             
-            // Transition 2: Loader -> Final Screen (after 3.5 seconds)
             setTimeout(() => {
                 transitionScreens(loaderScreen, finalScreen);
-                
-                // Wait for the final screen to slide in, then start confetti
                 setTimeout(startConfetti, 800); 
             }, 3500);
         });
